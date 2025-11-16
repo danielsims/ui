@@ -14,20 +14,22 @@ export default function ImagePage() {
   >("loading");
   const loadingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const isManualChangeRef = useRef(false);
+  const isInitialLoadRef = useRef(true);
 
-  // Handle automatic transition from loading to default after 4 seconds
+  // Handle automatic transition from loading to default after 3 seconds
   useEffect(() => {
-    if (controlledState === "loading") {
+    if (controlledState === "loading" && isInitialLoadRef.current) {
       // Clear any existing timeout
       if (loadingTimeoutRef.current) {
         clearTimeout(loadingTimeoutRef.current);
       }
 
-      // Set a new timeout to transition to default after 4 seconds
+      // Set a new timeout to transition to default after 3 seconds
       loadingTimeoutRef.current = setTimeout(() => {
         setControlledState("default");
         isManualChangeRef.current = false;
-      }, 4000);
+        isInitialLoadRef.current = false;
+      }, 1500);
     } else {
       // Clear timeout if state changes away from loading
       if (loadingTimeoutRef.current) {
@@ -49,18 +51,24 @@ export default function ImagePage() {
       isManualChangeRef.current = false;
       return;
     }
-    // Always update state from component (including hover/unhover)
+    // During initial load, ignore state changes from the Image component
+    // to ensure the loading state lasts for the full 3 seconds
+    if (isInitialLoadRef.current && newState !== "loading") {
+      return;
+    }
+    // Always update state from component (including hover/unhover) after initial load
     setControlledState(newState);
   };
 
   const handleManualStateChange = (newState: ImageStates) => {
     isManualChangeRef.current = true;
+    isInitialLoadRef.current = false; // Manual changes end the initial load period
     setControlledState(newState);
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-start bg-[#101010] p-8">
-      <div className="mt-8 relative">
+    <main className="flex min-h-screen flex-col items-center justify-center bg-[#101010] p-8">
+      <div className="relative">
         {controlledState === "loading" && (
           <div className="absolute inset-0">
             <ImageSkeleton width={400} height={400} />
@@ -97,6 +105,7 @@ export default function ImagePage() {
             states={imageStates as readonly ImageStates[]}
             activeState={controlledState ?? "loading"}
             onStateChange={handleManualStateChange}
+            layoutId="image-state"
           />
 
           <div className="flex w-full flex-row-reverse items-center justify-end gap-4 tracking-wide md:w-fit md:flex-row">

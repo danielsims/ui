@@ -9,7 +9,7 @@ import { FaGithub } from "react-icons/fa";
 
 import { StateToggle } from "../../components/state-toggle";
 
-export default function Home() {
+export default function InputPage() {
   const [controlledValue, setControlledValue] = useState<string>("");
   const [controlledState, setControlledState] = useState<
     ChatInputStates | undefined
@@ -52,6 +52,7 @@ export default function Home() {
             states={chatInputStates as readonly ChatInputStates[]}
             activeState={controlledState ?? "idle"}
             onStateChange={setControlledState}
+            layoutId="input-state"
           />
 
           <div className="flex w-full flex-row-reverse items-center justify-end gap-4 tracking-wide md:w-fit md:flex-row">
@@ -67,3 +68,4 @@ export default function Home() {
     </main>
   );
 }
+

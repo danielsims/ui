@@ -4,12 +4,14 @@ interface StateToggleProps<T> {
   states: readonly T[];
   activeState: T;
   onStateChange: (newState: T) => void;
+  layoutId?: string;
 }
 
 export function StateToggle<T>({
   states,
   activeState,
   onStateChange,
+  layoutId = "active-state",
 }: StateToggleProps<T>) {
   return (
     <div className="flex flex-wrap items-center gap-2">
@@ -24,7 +26,7 @@ export function StateToggle<T>({
         >
           {activeState === state && (
             <motion.span
-              layoutId="active-state"
+              layoutId={layoutId}
               className="absolute inset-0 z-10 bg-white mix-blend-difference"
               style={{ borderRadius: 9999, mixBlendMode: "difference" }}
               transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}

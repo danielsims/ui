@@ -82,12 +82,7 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background: #101010;
 }
 
 @layer utilities {
@@ -128,17 +123,20 @@ body {
 @layer utilities {
   .browser-responsive-height {
     height: 50vh;
+    width: 100vw;
   }
 
   @media (min-width: 768px) {
     .browser-responsive-height {
-      height: 60vh;
+      height: 70vh;
+      margin: 0 auto;
     }
   }
 
   @media (min-width: 1680px) {
     .browser-responsive-height {
       height: 65vh;
+      width: 50vw;
     }
   }
 }
