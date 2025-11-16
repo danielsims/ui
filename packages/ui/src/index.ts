@@ -46,4 +46,4 @@ export {
   type BrowserNavigationProps,
   type BrowserBodyProps,
   type BrowserContentProps,
-} from "./browser";
+} from "./browser/browser";

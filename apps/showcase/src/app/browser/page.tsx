@@ -18,7 +18,15 @@ export default function BrowserPage() {
       <div className="mb-8">
         <Browser
           variant={variant}
-          src={variant === "video" ? "/videos/reference-001.mov" : undefined}
+          src={
+            variant === "video"
+              ? "/videos/reference-001.mov"
+              : "https://reference.danielsi.ms"
+          }
+          displayUrl={
+            variant === "video" ? "https://reference.danielsi.ms" : undefined
+          }
+          tabTitle={variant === "video" ? "Reference Material" : undefined}
           width="65vw"
           height="60vh"
         />

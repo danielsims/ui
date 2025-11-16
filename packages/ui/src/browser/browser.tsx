@@ -8,18 +8,7 @@ import React, {
   useEffect,
 } from "react";
 import { cn } from "../utils";
-
-// Helper to get favicon URL from domain
-function getFaviconUrl(url: string | null): string | null {
-  if (!url) return null;
-  try {
-    const urlObj = new URL(url);
-    const domain = urlObj.hostname;
-    return `${urlObj.protocol}//${domain}/favicon.ico`;
-  } catch {
-    return null;
-  }
-}
+import { getFaviconUrl, extractTitleFromUrl } from "./utils";
 
 // Browser Context
 interface BrowserContextValue {
@@ -45,38 +34,11 @@ const useBrowserContext = () => {
   return context;
 };
 
-// Helper to extract a readable title from URL
-const extractTitleFromUrl = (url: string | null | undefined): string => {
-  if (!url) return "";
-  try {
-    const urlObj = new URL(url);
-    // Special case for reference.danielsi.ms
-    if (urlObj.hostname === "reference.danielsi.ms") {
-      return "Reference Material";
-    }
-    const pathname = urlObj.pathname;
-    const filename = pathname.split("/").pop();
-    if (filename && filename !== "" && filename.includes(".")) {
-      return filename
-        .replace(/\.[^/.]+$/, "")
-        .replace(/[-_]/g, " ")
-        .replace(/\b\w/g, (l) => l.toUpperCase());
-    }
-    const domain = urlObj.hostname.replace("www.", "");
-    const domainParts = domain.split(".");
-    if (domainParts.length > 0 && domainParts[0]) {
-      return domainParts[0].charAt(0).toUpperCase() + domainParts[0].slice(1);
-    }
-    return "";
-  } catch {
-    return "";
-  }
-};
-
 // Root Component
 export type BrowserRootProps = React.ComponentProps<"div"> & {
   variant?: "iframe" | "video";
   src?: string;
+  displayUrl?: string;
   tabTitle?: string;
   faviconUrl?: string;
   width?: number | string;
@@ -87,7 +49,8 @@ export const Root = ({
   children,
   variant = "iframe",
   src,
-  tabTitle = "Latest Release Notes",
+  displayUrl: displayUrlProp,
+  tabTitle = "Example",
   faviconUrl,
   width,
   height,
@@ -98,16 +61,18 @@ export const Root = ({
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const [title, setTitle] = useState(tabTitle);
 
-  const defaultUrl = "https://reference.danielsi.ms";
+  const defaultUrl = "https://example.com";
   const iframeSrc =
     variant === "iframe" && !src
       ? defaultUrl
       : variant === "iframe"
         ? src
         : null;
-  const videoDisplayUrl = variant === "video" ? defaultUrl : null;
+  const videoDisplayUrl =
+    variant === "video" ? displayUrlProp || defaultUrl : null;
   const videoFileSrc = variant === "video" ? src : null;
-  const displayUrl = iframeSrc || videoDisplayUrl || src || null;
+  const displayUrl =
+    iframeSrc || videoDisplayUrl || displayUrlProp || src || null;
 
   const favicon = faviconUrl || (displayUrl ? getFaviconUrl(displayUrl) : null);
 
@@ -124,12 +89,12 @@ export const Root = ({
           } else {
             // Fallback to URL-based title or default
             const urlTitle = extractTitleFromUrl(iframeSrc);
-            setTitle(tabTitle || urlTitle || "Reference Material");
+            setTitle(tabTitle || urlTitle || "Example");
           }
         } catch {
           // CORS or other error - use fallback
           const urlTitle = extractTitleFromUrl(iframeSrc);
-          setTitle(tabTitle || urlTitle || "Reference Material");
+          setTitle(tabTitle || urlTitle || "");
         }
       };
 
@@ -141,10 +106,10 @@ export const Root = ({
         clearTimeout(timeout);
       };
     } else if (variant === "video") {
-      setTitle(tabTitle || "Reference Material");
+      setTitle(tabTitle || "Example");
     } else {
       const urlTitle = displayUrl ? extractTitleFromUrl(displayUrl) : "";
-      setTitle(tabTitle || urlTitle || "Reference Material");
+      setTitle(tabTitle || urlTitle || "Example");
     }
   }, [variant, iframeSrc, videoDisplayUrl, src, tabTitle, displayUrl]);
 
@@ -441,6 +406,7 @@ export const Content = ({ className, ...props }: BrowserContentProps) => {
 export function Browser({
   variant = "iframe",
   src,
+  displayUrl,
   tabTitle = "",
   faviconUrl,
   width,
@@ -452,6 +418,7 @@ export function Browser({
     <Root
       variant={variant}
       src={src}
+      displayUrl={displayUrl}
       tabTitle={tabTitle}
       faviconUrl={faviconUrl}
       width={width}
