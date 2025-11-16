@@ -1,21 +1,76 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useLayoutEffect, useRef } from "react";
 import Link from "next/link";
 import { Browser } from "@ui/ui";
 import { FaGithub } from "react-icons/fa";
 
 import { StateToggle } from "../../components/state-toggle";
 
-const browserStates = ["iframe", "video"] as const;
+const browserStates = ["video", "iframe"] as const;
 type BrowserStates = (typeof browserStates)[number];
 
+const BREAKPOINTS = {
+  mobile: 768,
+  desktop: 1680,
+} as const;
+
+type BrowserDimensions = {
+  width: string;
+  height: string;
+  maxWidth: string;
+};
+
+const getBrowserDimensions = (viewportWidth: number): BrowserDimensions => {
+  if (viewportWidth < BREAKPOINTS.mobile) {
+    return {
+      width: "100%",
+      height: "50vh",
+      maxWidth: "100%",
+    };
+  }
+
+  if (viewportWidth <= BREAKPOINTS.desktop) {
+    return {
+      width: "100%",
+      height: "60vh",
+      maxWidth: "896px", // max-w-4xl
+    };
+  }
+
+  return {
+    width: "100%",
+    height: "65vh",
+    maxWidth: "1152px", // max-w-6xl
+  };
+};
+
 export default function BrowserPage() {
-  const [variant, setVariant] = useState<BrowserStates>("iframe");
+  const [variant, setVariant] = useState<BrowserStates>("video");
+  const [browserWidth, setBrowserWidth] = useState<string>("100%");
+  const [browserHeight, setBrowserHeight] = useState<string>("60vh");
+  const [maxWidth, setMaxWidth] = useState<string>("896px");
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useLayoutEffect(() => {
+    const updateDimensions = () => {
+      const dimensions = getBrowserDimensions(window.innerWidth);
+      setBrowserWidth(dimensions.width);
+      setBrowserHeight(dimensions.height);
+      setMaxWidth(dimensions.maxWidth);
+    };
+
+    updateDimensions();
+    window.addEventListener("resize", updateDimensions);
+
+    return () => {
+      window.removeEventListener("resize", updateDimensions);
+    };
+  }, []);
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-[#101010] p-8">
-      <div className="mb-8 max-w-6xl w-full">
+      <div ref={containerRef} className="mb-8 w-full" style={{ maxWidth }}>
         <Browser
           variant={variant}
           src={
@@ -27,8 +82,8 @@ export default function BrowserPage() {
             variant === "video" ? "https://reference.danielsi.ms" : undefined
           }
           tabTitle="Reference Material"
-          width="100%"
-          height="60vh"
+          width={browserWidth}
+          height={browserHeight}
         />
       </div>
 
