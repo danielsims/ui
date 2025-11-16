@@ -125,3 +125,21 @@ body {
     var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
+@layer utilities {
+  .browser-responsive-height {
+    height: 50vh;
+  }
+
+  @media (min-width: 768px) {
+    .browser-responsive-height {
+      height: 60vh;
+    }
+  }
+
+  @media (min-width: 1680px) {
+    .browser-responsive-height {
+      height: 65vh;
+    }
+  }
+}
+
