@@ -9,7 +9,7 @@ const config = {
   reactStrictMode: true,
 
   /** Enables hot reloading for local packages without a build step */
-  transpilePackages: ["@repo/ui"],
+  transpilePackages: ["@ui/ui"],
 
   images: {
     remotePatterns: [

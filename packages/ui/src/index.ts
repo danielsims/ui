@@ -12,17 +12,38 @@ export {
   type ChatInputInputProps,
 } from "./chat-input/chat-input";
 
-// GenerativeImage exports
+// Image exports
 export {
-  GenerativeImage,
-  Root as GenerativeImageRoot,
-  Image as GenerativeImageImage,
-  Caption as GenerativeImageCaption,
-  GenerativeImageSkeleton,
-  generativeImageStates,
-  type GenerativeImageStates,
-  type GenerativeImageRootProps,
-  type GenerativeImageImageProps,
-  type GenerativeImageCaptionProps,
-  type GenerativeImageSkeletonProps,
-} from "./generative-image";
+  Image,
+  Root as ImageRoot,
+  ImageComponent as ImageImage,
+  Caption as ImageCaption,
+  ImageSkeleton,
+  imageStates,
+  type ImageStates,
+  type ImageRootProps,
+  type ImageImageProps,
+  type ImageCaptionProps,
+  type ImageSkeletonProps,
+} from "./image";
+
+// Browser exports
+export {
+  Browser,
+  Root as BrowserRoot,
+  Header as BrowserHeader,
+  Controls as BrowserControls,
+  Tab as BrowserTab,
+  NewTab as BrowserNewTab,
+  Navigation as BrowserNavigation,
+  Body as BrowserBody,
+  Content as BrowserContent,
+  type BrowserRootProps,
+  type BrowserHeaderProps,
+  type BrowserControlsProps,
+  type BrowserTabProps,
+  type BrowserNewTabProps,
+  type BrowserNavigationProps,
+  type BrowserBodyProps,
+  type BrowserContentProps,
+} from "./browser";

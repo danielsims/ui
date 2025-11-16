@@ -1,10 +1,10 @@
 "use client";
 
-import type { ChatInputStates } from "@repo/ui";
+import type { ChatInputStates } from "@ui/ui";
 import type { ChangeEvent } from "react";
 import { useState } from "react";
 import Link from "next/link";
-import { ChatInput, chatInputStates } from "@repo/ui";
+import { ChatInput, chatInputStates } from "@ui/ui";
 import { FaGithub } from "react-icons/fa";
 
 import { StateToggle } from "../../components/state-toggle";

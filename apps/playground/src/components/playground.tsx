@@ -3,8 +3,8 @@
 import React, { useState } from "react";
 import type { ChangeEvent } from "react";
 import { useActions, useUIState } from "ai/rsc";
-import type { ChatInputStates } from "@repo/ui";
-import { ChatInput } from "@repo/ui";
+import type { ChatInputStates } from "@ui/ui";
+import { ChatInput } from "@ui/ui";
 
 import type { AI } from "~/app/actions";
 
