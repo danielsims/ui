@@ -1,4 +1,4 @@
-# UI
+# ui
 
 A collection of interface experiments developed by [@danielsims](https://x.com/danielsims)
 
