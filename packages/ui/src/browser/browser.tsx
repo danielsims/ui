@@ -130,9 +130,7 @@ export const Root = ({
     >
       <div
         className={cn(
-          "mx-auto bg-zinc-300 rounded-xl border border-zinc-300 overflow-hidden",
-          !width && "w-[80vw]",
-          !height && "h-[80vh]",
+          "bg-zinc-300 rounded-xl border border-zinc-300 overflow-hidden",
           className,
         )}
         style={{

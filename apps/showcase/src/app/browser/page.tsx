@@ -15,7 +15,7 @@ export default function BrowserPage() {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-[#101010] p-8">
-      <div className="mb-8">
+      <div className="mb-8 max-w-6xl w-full">
         <Browser
           variant={variant}
           src={
@@ -26,8 +26,8 @@ export default function BrowserPage() {
           displayUrl={
             variant === "video" ? "https://reference.danielsi.ms" : undefined
           }
-          tabTitle={variant === "video" ? "Reference Material" : undefined}
-          width="65vw"
+          tabTitle="Reference Material"
+          width="100%"
           height="60vh"
         />
       </div>
