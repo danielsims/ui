@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "exports": {
-    "./*": "./src/*.tsx"
+    "./*": "./src/*.tsx",
+    ".": "./src/index.ts"
   },
   "scripts": {
     "lint": "eslint . --max-warnings 0",
@@ -20,7 +21,11 @@
     "typescript": "5.9.2"
   },
   "dependencies": {
+    "class-variance-authority": "^0.7.0",
+    "framer-motion": "^11.0.0",
     "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react-dom": "^19.2.0",
+    "tailwind-merge": "^2.2.2",
+    "use-debounce": "^10.0.0"
   }
 }
