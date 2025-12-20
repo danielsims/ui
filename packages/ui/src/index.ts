@@ -47,3 +47,10 @@ export {
   type BrowserBodyProps,
   type BrowserContentProps,
 } from "./browser/browser";
+
+// Tactile component exports
+export {
+  TactileButton,
+  buttonVariants,
+  type TactileButtonProps,
+} from "./tactile";

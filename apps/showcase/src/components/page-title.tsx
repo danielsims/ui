@@ -8,6 +8,7 @@ const pages = [
   { name: "Browser", path: "/" },
   { name: "Image", path: "/image" },
   { name: "Input", path: "/input" },
+  { name: "Tactile", path: "/tactile" },
 ] as const;
 
 export function PageTitle() {
@@ -23,10 +24,12 @@ export function PageTitle() {
     if (pathname === "/image") return "Image";
     if (pathname === "/input" || pathname === "/generative-input")
       return "Input";
+    if (pathname === "/tactile") return "Tactile";
     return "Browser";
   };
 
   const currentPageName = getCurrentPageName();
+  const isTactilePage = pathname === "/tactile";
 
   const handleNavigation = (path: string) => {
     router.push(path);
@@ -57,19 +60,35 @@ export function PageTitle() {
 
   return (
     <header
-      className="fixed top-0 left-0 right-0 flex h-12 items-center pl-8 bg-[#101010]"
+      className={`fixed top-0 left-0 right-0 flex h-12 items-center pl-8 ${
+        isTactilePage ? "bg-[#e2e2e2]" : "bg-[#101010]"
+      }`}
       style={{ zIndex: 150 }}
     >
-      <div className="relative flex items-center gap-1.5 pt-4 text-sm font-light tracking-wide text-white">
-        <span className="text-white/50">danielsims</span>
-        <span className="text-white/30">/</span>
-        <span className="text-white/50">ui</span>
-        <span className="text-white/30">/</span>
+      <div
+        className={`relative flex items-center gap-1.5 pt-4 text-sm font-light tracking-wide ${
+          isTactilePage ? "text-[#1a1a1a]" : "text-white"
+        }`}
+      >
+        <span className={isTactilePage ? "text-[#1a1a1a]/50" : "text-white/50"}>
+          danielsims
+        </span>
+        <span className={isTactilePage ? "text-[#1a1a1a]/30" : "text-white/30"}>
+          /
+        </span>
+        <span className={isTactilePage ? "text-[#1a1a1a]/50" : "text-white/50"}>
+          ui
+        </span>
+        <span className={isTactilePage ? "text-[#1a1a1a]/30" : "text-white/30"}>
+          /
+        </span>
         <div className="relative">
           <button
             ref={buttonRef}
             onClick={() => setIsOpen(!isOpen)}
-            className="flex items-center gap-2 transition hover:text-white/80"
+            className={`flex items-center gap-2 transition ${
+              isTactilePage ? "hover:text-[#1a1a1a]/80" : "hover:text-white/80"
+            }`}
             style={{ WebkitTapHighlightColor: "transparent" }}
           >
             <span>{currentPageName}</span>
@@ -84,7 +103,11 @@ export function PageTitle() {
           {isOpen && (
             <div
               ref={popoverRef}
-              className="absolute left-0 top-full mt-2 min-w-[120px] rounded-md border border-white/10 bg-black p-1"
+              className={`absolute left-0 top-full mt-2 min-w-[120px] rounded-md border p-1 ${
+                isTactilePage
+                  ? "border-[#1a1a1a]/10 bg-white"
+                  : "border-white/10 bg-black"
+              }`}
             >
               {pages.map((page) => {
                 const isActive =
@@ -96,10 +119,14 @@ export function PageTitle() {
                   <button
                     key={page.path}
                     onClick={() => handleNavigation(page.path)}
-                    className={`w-full rounded-sm px-3 py-1.5 text-left text-sm text-white transition ${
-                      isActive
-                        ? "bg-white/10 font-medium"
-                        : "hover:bg-white/5 text-white/70"
+                    className={`w-full rounded-sm px-3 py-1.5 text-left text-sm transition ${
+                      isTactilePage
+                        ? isActive
+                          ? "bg-[#1a1a1a]/10 font-medium text-[#1a1a1a]"
+                          : "hover:bg-[#1a1a1a]/5 text-[#1a1a1a]/70"
+                        : isActive
+                          ? "bg-white/10 font-medium text-white"
+                          : "hover:bg-white/5 text-white/70"
                     }`}
                     style={{ WebkitTapHighlightColor: "transparent" }}
                   >
