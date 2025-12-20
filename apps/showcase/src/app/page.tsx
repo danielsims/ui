@@ -15,7 +15,7 @@ export default function BrowserPage() {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-[#101010] p-8">
-      <div className="mb-8 w-full max-w-full md:max-w-3xl xl:max-w-6xl">
+      <div className="mb-8 w-full max-w-full md:max-w-4xl xl:max-w-5xl aspect-video">
         <Browser
           variant={variant}
           src={
@@ -28,7 +28,7 @@ export default function BrowserPage() {
           }
           tabTitle="Reference Material"
           width="100%"
-          className="browser-responsive-height"
+          className="h-full"
         />
       </div>
 
