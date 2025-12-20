@@ -37,8 +37,8 @@ export default function BrowserPage() {
           Browser
         </p>
         <p className="text-sm font-light tracking-wide text-[#888]">
-          A browser component that displays either a video or iframe content
-          with a native browser interface.
+          A browser component that displays either video or iframe content with
+          a native browser interface.
         </p>
         <hr className="my-12 border-[#333] border-opacity-50" />
         <div className="flex flex-row flex-wrap justify-between gap-16 text-white">

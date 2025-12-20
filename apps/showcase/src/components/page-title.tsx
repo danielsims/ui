@@ -21,7 +21,8 @@ export function PageTitle() {
   const getCurrentPageName = () => {
     if (pathname === "/" || pathname === "/browser") return "Browser";
     if (pathname === "/image") return "Image";
-    if (pathname === "/input" || pathname === "/generative-input") return "Input";
+    if (pathname === "/input" || pathname === "/generative-input")
+      return "Input";
     return "Browser";
   };
 
@@ -55,7 +56,10 @@ export function PageTitle() {
   }, [isOpen]);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 flex h-12 items-center pl-8 bg-[#101010]">
+    <header
+      className="fixed top-0 left-0 right-0 flex h-12 items-center pl-8 bg-[#101010]"
+      style={{ zIndex: 150 }}
+    >
       <div className="relative flex items-center gap-1.5 pt-4 text-sm font-light tracking-wide text-white">
         <span className="text-white/50">danielsims</span>
         <span className="text-white/30">/</span>
@@ -80,28 +84,29 @@ export function PageTitle() {
           {isOpen && (
             <div
               ref={popoverRef}
-              className="absolute left-0 top-full mt-2 z-[100] min-w-[120px] rounded-md border border-white/10 bg-black p-1"
+              className="absolute left-0 top-full mt-2 min-w-[120px] rounded-md border border-white/10 bg-black p-1"
             >
-          {pages.map((page) => {
-            const isActive = pathname === page.path || 
-              (page.path === "/" && pathname === "/browser") ||
-              (page.path === "/input" && pathname === "/generative-input");
-            
-            return (
-              <button
-                key={page.path}
-                onClick={() => handleNavigation(page.path)}
-                className={`w-full rounded-sm px-3 py-1.5 text-left text-sm text-white transition ${
-                  isActive
-                    ? "bg-white/10 font-medium"
-                    : "hover:bg-white/5 text-white/70"
-                }`}
-                style={{ WebkitTapHighlightColor: "transparent" }}
-              >
-                {page.name}
-              </button>
-            );
-          })}
+              {pages.map((page) => {
+                const isActive =
+                  pathname === page.path ||
+                  (page.path === "/" && pathname === "/browser") ||
+                  (page.path === "/input" && pathname === "/generative-input");
+
+                return (
+                  <button
+                    key={page.path}
+                    onClick={() => handleNavigation(page.path)}
+                    className={`w-full rounded-sm px-3 py-1.5 text-left text-sm text-white transition ${
+                      isActive
+                        ? "bg-white/10 font-medium"
+                        : "hover:bg-white/5 text-white/70"
+                    }`}
+                    style={{ WebkitTapHighlightColor: "transparent" }}
+                  >
+                    {page.name}
+                  </button>
+                );
+              })}
             </div>
           )}
         </div>
@@ -109,4 +114,3 @@ export function PageTitle() {
     </header>
   );
 }
-
