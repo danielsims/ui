@@ -9,6 +9,7 @@ const pages = [
   { name: "Image", path: "/image" },
   { name: "Input", path: "/input" },
   { name: "Tactile", path: "/tactile" },
+  { name: "Thread Rail", path: "/thread-rail" },
 ] as const;
 
 export function PageTitle() {
@@ -21,6 +22,7 @@ export function PageTitle() {
   // Determine current page name
   const getCurrentPageName = () => {
     if (pathname === "/" || pathname === "/browser") return "Browser";
+    if (pathname === "/thread-rail") return "Thread Rail";
     if (pathname === "/image") return "Image";
     if (pathname === "/input" || pathname === "/generative-input")
       return "Input";
@@ -86,7 +88,7 @@ export function PageTitle() {
           <button
             ref={buttonRef}
             onClick={() => setIsOpen(!isOpen)}
-            className={`flex items-center gap-2 transition ${
+            className={`flex items-center gap-2 whitespace-nowrap transition ${
               isTactilePage ? "hover:text-[#1a1a1a]/80" : "hover:text-white/80"
             }`}
             style={{ WebkitTapHighlightColor: "transparent" }}
@@ -103,7 +105,7 @@ export function PageTitle() {
           {isOpen && (
             <div
               ref={popoverRef}
-              className={`absolute left-0 top-full mt-2 min-w-[120px] rounded-md border p-1 ${
+              className={`absolute left-0 top-full mt-2 min-w-[160px] rounded-md border p-1 ${
                 isTactilePage
                   ? "border-[#1a1a1a]/10 bg-white"
                   : "border-white/10 bg-black"
@@ -119,7 +121,7 @@ export function PageTitle() {
                   <button
                     key={page.path}
                     onClick={() => handleNavigation(page.path)}
-                    className={`w-full rounded-sm px-3 py-1.5 text-left text-sm transition ${
+                    className={`w-full whitespace-nowrap rounded-sm px-3 py-1.5 text-left text-sm transition ${
                       isTactilePage
                         ? isActive
                           ? "bg-[#1a1a1a]/10 font-medium text-[#1a1a1a]"
