@@ -6,12 +6,18 @@ import "./globals.css";
 import { PageTitle } from "../components/page-title";
 
 export const metadata: Metadata = {
-  title: "UI Components",
-  description: "A collection of components for building modern interfaces.",
+  title: "ui",
+  description:
+    "A collection of interface experiments developed by @danielsims.",
   metadataBase: new URL("https://ui.danielsi.ms"),
   openGraph: {
     url: "https://ui.danielsi.ms",
     type: "website",
+    images: ["/api/og"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    images: ["/api/og"],
   },
 };
 
