@@ -48,6 +48,27 @@ export {
   type BrowserContentProps,
 } from "./browser/browser";
 
+// ThreadRail exports
+export {
+  ThreadRail,
+  Root as ThreadRailRoot,
+  Track as ThreadRailTrack,
+  Tick as ThreadRailTick,
+  Preview as ThreadRailPreview,
+  PreviewTitle as ThreadRailPreviewTitle,
+  PreviewDescription as ThreadRailPreviewDescription,
+  threadRailStates,
+  type ThreadRailStates,
+  type ThreadRailItem,
+  type ThreadRailProps,
+  type ThreadRailRootProps,
+  type ThreadRailTrackProps,
+  type ThreadRailTickProps,
+  type ThreadRailPreviewProps,
+  type ThreadRailPreviewTitleProps,
+  type ThreadRailPreviewDescriptionProps,
+} from "./thread-rail";
+
 // Tactile component exports
 export {
   TactileButton,
