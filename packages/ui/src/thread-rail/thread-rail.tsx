@@ -78,7 +78,7 @@ function Track({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       onMouseLeave={() => setHover(null)}
-      className={cn("flex w-fit flex-col gap-0.5", className)}
+      className={cn("flex w-fit flex-col", className)}
       {...props}
     />
   );
@@ -139,7 +139,7 @@ function Tick({
         onClick?.(event);
       }}
       className={cn(
-        "group relative flex h-2 items-center outline-none",
+        "group relative flex h-2.5 items-center outline-none",
         className,
       )}
       {...props}
