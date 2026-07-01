@@ -5,7 +5,7 @@ import { useState, useRef, useEffect } from "react";
 import { FaChevronDown } from "react-icons/fa";
 
 const pages = [
-  { name: "Browser", path: "/" },
+  { name: "Browser", path: "/browser" },
   { name: "Image", path: "/image" },
   { name: "Input", path: "/input" },
   { name: "Tactile", path: "/tactile" },
@@ -114,7 +114,6 @@ export function PageTitle() {
               {pages.map((page) => {
                 const isActive =
                   pathname === page.path ||
-                  (page.path === "/" && pathname === "/browser") ||
                   (page.path === "/input" && pathname === "/generative-input");
 
                 return (

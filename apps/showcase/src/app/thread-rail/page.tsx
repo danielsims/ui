@@ -102,6 +102,7 @@ const demoTick = conversation[6]!.id;
 
 export default function ThreadRailPage() {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const demoRef = useRef<HTMLButtonElement>(null);
   // Active ticks = the turns whose user message is currently in view. It is a
   // set, not a single row, so every visible turn lights up at once.
   const [active, setActive] = useState<string[]>([]);
@@ -144,15 +145,25 @@ export default function ThreadRailPage() {
     });
   };
 
-  // Selecting a state demonstrates it on the real rail: "active" scrolls to the
-  // demo turn (so the highlight lands where the reader is), "hovered" opens its
-  // preview. Any real interaction with the panel hands the rail back to live.
+  // Demonstrate a state on the real rail without any extra component API:
+  // "active" scrolls to the demo turn so its tick lights up in view, and "hover"
+  // focuses that tick, which is how a keyboard user opens a preview. Interacting
+  // with the panel (scroll or press) hands the rail back to live.
   const demonstrate = (state: ThreadRailStates) => {
     setPreviewState(state);
-    if (state === "active") scrollToTurn(demoTick);
+    if (state === "default") {
+      demoRef.current?.blur();
+      scrollRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+    scrollToTurn(demoTick);
+    if (state === "hover") demoRef.current?.focus({ preventScroll: true });
+    else demoRef.current?.blur();
   };
-  const backToLive = () =>
+  const backToLive = () => {
     setPreviewState((state) => (state === "default" ? state : "default"));
+    demoRef.current?.blur();
+  };
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-[#101010] p-8">
@@ -164,15 +175,12 @@ export default function ThreadRailPage() {
         {/* The rail sits in the panel's left gutter and reflects the reader's
             position — one tick per turn, active while its message is on screen. */}
         <div className="-translate-y-1/2 absolute top-1/2 left-4 z-20">
-          <ThreadRailRoot
-            value={active}
-            onValueChange={scrollToTurn}
-            hovered={previewState === "hovered" ? demoTick : undefined}
-          >
+          <ThreadRailRoot value={active} onValueChange={scrollToTurn}>
             <ThreadRailTrack>
               {conversation.map((turn) => (
                 <ThreadRailTick
                   key={turn.id}
+                  ref={turn.id === demoTick ? demoRef : undefined}
                   value={turn.id}
                   aria-label={turn.prompt}
                 >
